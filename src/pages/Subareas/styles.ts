@@ -19,18 +19,12 @@ export const Container = styled.div`
     &:hover {
       transform: translateX(10px);
     }
-
-    img {
-      margin: 16px;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-    }
   }
 `;
 
 export const SubareaCard = styled.div`
   color: #fff;
+  padding: 20px;
 
   p + p {
     margin-top: 16px;

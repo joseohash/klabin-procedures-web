@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 
 import SignIn from './pages/SignIn';
-import Dashboard from './pages/Dashboard';
+import Subareas from './pages/Subareas';
 
 const App: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={SignIn} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" component={Subareas} />
         </Switch>
       </BrowserRouter>
       <GlobalStyle />
