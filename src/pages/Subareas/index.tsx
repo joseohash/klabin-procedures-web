@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 
-import { Container, SubareaCard } from './styles';
+import { Container, SubareaCard, SubareaDetail } from './styles';
 import api from '../../services/api';
 
 interface Subarea {
@@ -30,13 +30,28 @@ const Subareas: React.FC = () => {
 
       <Container>
         {subareas.map((subarea) => (
-          <Link to="/" key={subarea.id}>
+          <Link to={`/procedures/${subarea.id}`} key={subarea.id}>
             <SubareaCard>
-              <p>{`Tag: ${subarea.tag}`}</p>
-              <p>{`Local: ${subarea.local}`}</p>
-              <p>{`Setor: ${subarea.sector}`}</p>
-              <p>{`Local: ${subarea.local}`}</p>
-              <p>{`Observações: ${subarea.observations}`}</p>
+              <SubareaDetail>
+                <p>Tag:</p>
+                <span>{subarea.tag}</span>
+              </SubareaDetail>
+              <SubareaDetail>
+                <p>Local:</p>
+                <span>{subarea.local}</span>
+              </SubareaDetail>
+              <SubareaDetail>
+                <p>Setor:</p>
+                <span>{subarea.sector}</span>
+              </SubareaDetail>
+              <SubareaDetail>
+                <p>Local:</p>
+                <span>{subarea.local}</span>
+              </SubareaDetail>
+              <SubareaDetail>
+                <p>Observações:</p>
+                <span>{subarea.observations}</span>
+              </SubareaDetail>
             </SubareaCard>
           </Link>
         ))}

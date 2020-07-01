@@ -5,6 +5,7 @@ import GlobalStyle from './styles/global';
 
 import SignIn from './pages/SignIn';
 import Subareas from './pages/Subareas';
+import Procedures from './pages/Procedures';
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact component={SignIn} />
           <Route path="/dashboard" component={Subareas} />
+          <Route path="/procedures" component={Procedures} />
         </Switch>
       </BrowserRouter>
       <GlobalStyle />

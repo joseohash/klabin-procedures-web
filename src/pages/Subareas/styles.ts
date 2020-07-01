@@ -25,8 +25,23 @@ export const Container = styled.div`
 export const SubareaCard = styled.div`
   color: #fff;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 
   p + p {
     margin-top: 16px;
+  }
+`;
+
+export const SubareaDetail = styled.div`
+  display: flex;
+
+  & + div {
+    margin-top: 16px;
+  }
+
+  span {
+    margin-left: 4px;
+    color: #00ff90;
   }
 `;
