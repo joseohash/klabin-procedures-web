@@ -26,16 +26,16 @@ const SignIn: React.FC = () => {
           <img src={logo} alt="KlabinProcedures" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu logon</h1>
+            {/* <h1>Faça seu logon</h1>
 
-            <Input name="email" icon={FiMail} placeholder="E-mail" />
+              <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="Senha"
-            />
+              <Input
+                name="password"
+                icon={FiLock}
+                type="password"
+                placeholder="Senha"
+              /> */}
 
             <Button type="submit">Entrar</Button>
           </Form>
