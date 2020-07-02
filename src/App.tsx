@@ -14,7 +14,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact component={SignIn} />
           <Route path="/dashboard" component={Subareas} />
-          <Route path="/procedures" component={Procedures} />
+          <Route path="/procedures/:subarea_id+" component={Procedures} />
         </Switch>
       </BrowserRouter>
       <GlobalStyle />

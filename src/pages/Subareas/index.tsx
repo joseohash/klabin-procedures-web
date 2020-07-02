@@ -30,7 +30,7 @@ const Subareas: React.FC = () => {
 
       <Container>
         {subareas.map((subarea) => (
-          <Link to={`/procedures/${subarea.id}`} key={subarea.id}>
+          <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
             <SubareaCard>
               <SubareaDetail>
                 <p>Tag:</p>
