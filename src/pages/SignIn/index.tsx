@@ -1,12 +1,12 @@
 import React, { useRef, useCallback } from 'react';
-import { FiMail, FiLock } from 'react-icons/fi';
+// import { FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { useHistory } from 'react-router-dom';
 import logo from '../../assets/klabin-logo.svg';
 
 import Button from '../../components/Button';
-import Input from '../../components/Input';
+// import Input from '../../components/Input';
 
 import { Content, AnimationContainer, Background, Container } from './styles';
 
