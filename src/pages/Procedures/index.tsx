@@ -9,6 +9,7 @@ import {
   ProcedureInfo,
   ProcedureDetail,
   ProcedureCard,
+  ProcedureFontColor,
 } from './styles';
 
 interface Params {
@@ -70,6 +71,7 @@ const Procedures: React.FC = () => {
                 <span>{procedure.tag}</span>
               </ProcedureDetail>
             </ProcedureInfo>
+            <ProcedureFontColor />
           </ProcedureCard>
         ))}
       </Container>
