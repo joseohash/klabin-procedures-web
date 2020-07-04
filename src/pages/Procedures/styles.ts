@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+interface ProcedureFontColorProps {
+  fontColor: string;
+}
 
 export const Container = styled.div`
   max-width: 1300px;
@@ -49,10 +53,44 @@ export const ProcedureDetail = styled.div`
   }
 `;
 
-export const ProcedureFontColor = styled.div`
+export const ProcedureFontColor = styled.div<ProcedureFontColorProps>`
   height: 40px;
   width: 40px;
-  margin: 16px 16px auto auto;
-  background: red;
+  margin: 16px 32px auto auto;
+  padding: 16px;
   border-radius: 50%;
+
+  ${(props) => {
+    switch (props.fontColor) {
+      case 'Massa':
+        return css`
+          background: #8b4513;
+        `;
+      case 'Química':
+        return css`
+          background: #7fffd4;
+        `;
+      case 'Pneumática':
+        return css`
+          background: #00bfff;
+        `;
+      case 'Elétrica':
+        return css`
+          background: #b5171b;
+        `;
+      case 'Água':
+        return css`
+          background: #18b41b;
+        `;
+      case 'Mecânica':
+        return css`
+          background: #4f4e52;
+        `;
+
+      default:
+        return css`
+          background: #3e3b47;
+        `;
+    }
+  }}
 `;
