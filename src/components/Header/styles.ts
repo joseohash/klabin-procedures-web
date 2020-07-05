@@ -3,15 +3,15 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 60px;
+  height: 64px;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 32px;
   background: #009e59;
 
   img {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
   }
 
@@ -23,4 +23,5 @@ export const Container = styled.div`
 export const LogoutButtom = styled.button`
   background: none;
   border: none;
+  padding: 16px;
 `;

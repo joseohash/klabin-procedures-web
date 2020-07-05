@@ -25,7 +25,7 @@ const Header: React.FC<Props> = ({ title }) => {
       <strong>{title}</strong>
 
       <LogoutButtom onClick={handleLogout}>
-        <FiLogOut size={26} color="#fff" />
+        <FiLogOut size={32} color="#fff" />
       </LogoutButtom>
     </Container>
   );
