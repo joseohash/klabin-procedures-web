@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 
-import { ButtonDiv, Container, SubareaCard, SubareaDetail } from './styles';
+import {
+  ButtonDiv,
+  Container,
+  SubareaCard,
+  SubareaDetail,
+  NoSubareasFoundDiv,
+} from './styles';
 import api from '../../services/api';
 
 interface Subarea {
@@ -21,7 +27,7 @@ const Subareas: React.FC = () => {
 
   useEffect(() => {
     api.get('/subareas').then((response) => {
-      setSubareas(response.data);
+      setSubareas([]);
     });
   }, []);
 
@@ -34,32 +40,38 @@ const Subareas: React.FC = () => {
       </ButtonDiv>
 
       <Container>
-        {subareas.map((subarea) => (
-          <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
-            <SubareaCard>
-              <SubareaDetail>
-                <p>Tag:</p>
-                <span>{subarea.tag}</span>
-              </SubareaDetail>
-              <SubareaDetail>
-                <p>Local:</p>
-                <span>{subarea.local}</span>
-              </SubareaDetail>
-              <SubareaDetail>
-                <p>Setor:</p>
-                <span>{subarea.sector}</span>
-              </SubareaDetail>
-              <SubareaDetail>
-                <p>Local:</p>
-                <span>{subarea.local}</span>
-              </SubareaDetail>
-              <SubareaDetail>
-                <p>Observações:</p>
-                <span>{subarea.observations}</span>
-              </SubareaDetail>
-            </SubareaCard>
-          </Link>
-        ))}
+        {subareas.length !== 0 ? (
+          subareas.map((subarea) => (
+            <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
+              <SubareaCard>
+                <SubareaDetail>
+                  <p>Tag:</p>
+                  <span>{subarea.tag}</span>
+                </SubareaDetail>
+                <SubareaDetail>
+                  <p>Local:</p>
+                  <span>{subarea.local}</span>
+                </SubareaDetail>
+                <SubareaDetail>
+                  <p>Setor:</p>
+                  <span>{subarea.sector}</span>
+                </SubareaDetail>
+                <SubareaDetail>
+                  <p>Local:</p>
+                  <span>{subarea.local}</span>
+                </SubareaDetail>
+                <SubareaDetail>
+                  <p>Observações:</p>
+                  <span>{subarea.observations}</span>
+                </SubareaDetail>
+              </SubareaCard>
+            </Link>
+          ))
+        ) : (
+          <NoSubareasFoundDiv>
+            <p>Nenhuma subárea cadastrada</p>
+          </NoSubareasFoundDiv>
+        )}
       </Container>
     </>
   );

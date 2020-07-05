@@ -57,3 +57,14 @@ export const SubareaDetail = styled.div`
     color: #00ff90;
   }
 `;
+
+export const NoSubareasFoundDiv = styled.div`
+  background-color: #3e3b47;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #c9c9c9;
+  font-size: 24px;
+`;
