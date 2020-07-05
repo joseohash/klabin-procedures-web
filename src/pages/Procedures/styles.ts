@@ -54,8 +54,8 @@ export const ProcedureDetail = styled.div`
 `;
 
 export const ProcedureFontColor = styled.div<ProcedureFontColorProps>`
-  height: 40px;
-  width: 40px;
+  height: 32px;
+  width: 32px;
   margin: 16px 32px auto auto;
   padding: 16px;
   border-radius: 50%;

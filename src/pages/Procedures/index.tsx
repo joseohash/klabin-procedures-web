@@ -57,13 +57,7 @@ const Procedures: React.FC = () => {
             <ProcedureInfo>
               <ProcedureDetail>
                 <p>Descrição</p>
-                <span>
-                  {procedure.description}Texto é um conjunto de palavras e
-                  frases encadeadas que permitem interpretação e transmitem uma
-                  mensagem. É qualquer obra escrita em versão original e que
-                  constitui um livro ou um documento escrito. Um texto é uma
-                  unidade linguística de extensão superior à frase.
-                </span>
+                <span>{procedure.description}</span>
               </ProcedureDetail>
               <ProcedureDetail>
                 <p>Fonte</p>

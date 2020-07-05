@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
+import Button from '../../components/Button';
 
-import { Container, SubareaCard, SubareaDetail } from './styles';
+import { ButtonDiv, Container, SubareaCard, SubareaDetail } from './styles';
 import api from '../../services/api';
 
 interface Subarea {
@@ -27,6 +28,10 @@ const Subareas: React.FC = () => {
   return (
     <>
       <Header title="Subáreas" />
+
+      <ButtonDiv>
+        <Button type="button">Adicionar subarea</Button>
+      </ButtonDiv>
 
       <Container>
         {subareas.map((subarea) => (

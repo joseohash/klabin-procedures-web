@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const ButtonDiv = styled.div`
+  max-width: 1120px;
+  margin: 64px auto;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    width: 300px;
+    color: #fff;
+  }
+`;
+
 export const Container = styled.div`
   max-width: 1120px;
   margin: 64px auto;
