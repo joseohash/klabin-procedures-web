@@ -6,36 +6,33 @@ import { Form } from './styles';
 import Modal from '../Modal';
 import Input from '../Input';
 
-interface FoodPlate {
-  id: number;
+interface Subarea {
   name: string;
-  image: string;
-  price: string;
-  description: string;
-  available: boolean;
-}
-
-interface CreateFoodData {
-  name: string;
-  image: string;
-  price: string;
-  description: string;
+  tag: string;
+  sector: string;
+  local: string;
+  observations: string;
 }
 
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  // handleAddFood: (food: Omit<IFoodPlate, 'id' | 'available'>) => void;
+  handleAddSubarea: (subarea: Subarea) => void;
 }
 
-const ModalAddSubarea: React.FC<ModalProps> = ({ isOpen, setIsOpen }) => {
+const ModalAddSubarea: React.FC<ModalProps> = ({
+  isOpen,
+  setIsOpen,
+  handleAddSubarea,
+}) => {
   const formRef = useRef<FormHandles>(null);
 
   const handleSubmit = useCallback(
-    async (data: CreateFoodData) => {
+    async (data: Subarea) => {
+      handleAddSubarea(data);
       setIsOpen();
     },
-    [setIsOpen],
+    [setIsOpen, handleAddSubarea],
   );
 
   return (

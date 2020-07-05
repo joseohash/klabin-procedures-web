@@ -26,7 +26,7 @@ interface Subarea {
 
 const Subareas: React.FC = () => {
   const [subareas, setSubareas] = useState<Subarea[]>([]);
-  const [openAddSubareaModal, setOpenAddSubareaModal] = useState(true);
+  const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
 
   useEffect(() => {
     api.get('/subareas').then((response) => {
@@ -38,6 +38,16 @@ const Subareas: React.FC = () => {
     setOpenAddSubareaModal((state) => !state);
   }, []);
 
+  const handleAddSubarea = useCallback(async (subarea: Omit<Subarea, 'id'>) => {
+    try {
+      const response = await api.post('/subareas', subarea);
+
+      setSubareas((state) => [...state, response.data]);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <>
       <Header title="Subáreas" />
@@ -45,6 +55,7 @@ const Subareas: React.FC = () => {
       <ModalAddSubarea
         isOpen={openAddSubareaModal}
         setIsOpen={handleOpenAddSubareaModal}
+        handleAddSubarea={handleAddSubarea}
       />
 
       <ButtonDiv>
