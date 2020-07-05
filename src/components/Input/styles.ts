@@ -3,13 +3,14 @@ import styled, { css } from 'styled-components';
 import Tooltip from '../Tooltip';
 
 interface ConainerProps {
+  isModal?: boolean;
   isFocused: boolean;
   isFilled: boolean;
   isErrored: boolean;
 }
 
 export const Container = styled.div<ConainerProps>`
-  background: #232129;
+  background: ${(props) => (props.isModal ? '#f5f5f5' : '#232129')};
   border-radius: 10px;
   padding: 16px;
   width: 100%;
@@ -49,7 +50,7 @@ export const Container = styled.div<ConainerProps>`
     flex: 1;
     background: transparent;
     border: 0;
-    color: #f4ede8;
+    color: ${(props) => (props.isModal ? '#000' : '#f4ede8')};
 
     &::placeholder {
       color: #666360;

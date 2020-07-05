@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
+
 import Header from '../../components/Header';
 import Button from '../../components/Button';
+import ModalAddSubarea from '../../components/ModalAddSubarea';
 
 import {
   ButtonDiv,
@@ -11,7 +14,6 @@ import {
   SubareaDetail,
   NoSubareasFoundDiv,
 } from './styles';
-import api from '../../services/api';
 
 interface Subarea {
   id: string;
@@ -24,6 +26,7 @@ interface Subarea {
 
 const Subareas: React.FC = () => {
   const [subareas, setSubareas] = useState<Subarea[]>([]);
+  const [openAddSubareaModal, setOpenAddSubareaModal] = useState(true);
 
   useEffect(() => {
     api.get('/subareas').then((response) => {
@@ -31,12 +34,23 @@ const Subareas: React.FC = () => {
     });
   }, []);
 
+  const handleOpenAddSubareaModal = useCallback(() => {
+    setOpenAddSubareaModal((state) => !state);
+  }, []);
+
   return (
     <>
       <Header title="Subáreas" />
 
+      <ModalAddSubarea
+        isOpen={openAddSubareaModal}
+        setIsOpen={handleOpenAddSubareaModal}
+      />
+
       <ButtonDiv>
-        <Button type="button">Adicionar subarea</Button>
+        <Button type="button" onClick={handleOpenAddSubareaModal}>
+          Adicionar subarea
+        </Button>
       </ButtonDiv>
 
       <Container>
