@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import api from '../../services/api';
 
 import Header from '../../components/Header';
@@ -43,8 +47,14 @@ const Subareas: React.FC = () => {
       const response = await api.post('/subareas', subarea);
 
       setSubareas((state) => [...state, response.data]);
+
+      toast('Subárea criada', {
+        type: 'success',
+      });
     } catch (err) {
-      console.log(err);
+      toast('Falha ao criar subárea', {
+        type: 'error',
+      });
     }
   }, []);
 
@@ -98,6 +108,7 @@ const Subareas: React.FC = () => {
           </NoSubareasFoundDiv>
         )}
       </Container>
+      <ToastContainer />
     </>
   );
 };
