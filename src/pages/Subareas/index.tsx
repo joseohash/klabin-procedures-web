@@ -27,7 +27,7 @@ const Subareas: React.FC = () => {
 
   useEffect(() => {
     api.get('/subareas').then((response) => {
-      setSubareas([]);
+      setSubareas(response.data);
     });
   }, []);
 
