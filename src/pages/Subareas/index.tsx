@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { Link } from 'react-router-dom';
+import { FiX, FiEdit } from 'react-icons/fi';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,8 +16,10 @@ import {
   ButtonDiv,
   Container,
   SubareaCard,
+  SubareaInfo,
   SubareaDetail,
   NoSubareasFoundDiv,
+  SubareaModifies,
 } from './styles';
 
 interface Subarea {
@@ -46,7 +49,9 @@ const Subareas: React.FC = () => {
     try {
       const response = await api.post('/subareas', subarea);
 
-      setSubareas((state) => [...state, response.data]);
+      console.log(response.data);
+
+      setSubareas((state) => [response.data, ...state]);
 
       toast('Subárea criada', {
         type: 'success',
@@ -57,6 +62,31 @@ const Subareas: React.FC = () => {
       });
     }
   }, []);
+
+  const handleDeleteSubarea = useCallback(
+    async (subarea_id: string) => {
+      try {
+        await api.delete(`subareas/${subarea_id}`);
+
+        const subareasCopy = [...subareas];
+
+        const subareasWithOutDeletedSubarea = subareasCopy.filter(
+          (subareaCopied) => subareaCopied.id !== subarea_id,
+        );
+
+        setSubareas(subareasWithOutDeletedSubarea);
+
+        toast('Subárea deletada', {
+          type: 'success',
+        });
+      } catch (err) {
+        toast('Falha ao deletar subárea', {
+          type: 'error',
+        });
+      }
+    },
+    [subareas],
+  );
 
   return (
     <>
@@ -77,30 +107,45 @@ const Subareas: React.FC = () => {
       <Container>
         {subareas.length !== 0 ? (
           subareas.map((subarea) => (
-            <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
-              <SubareaCard>
-                <SubareaDetail>
-                  <p>Tag:</p>
-                  <span>{subarea.tag}</span>
-                </SubareaDetail>
-                <SubareaDetail>
-                  <p>Local:</p>
-                  <span>{subarea.local}</span>
-                </SubareaDetail>
-                <SubareaDetail>
-                  <p>Setor:</p>
-                  <span>{subarea.sector}</span>
-                </SubareaDetail>
-                <SubareaDetail>
-                  <p>Local:</p>
-                  <span>{subarea.local}</span>
-                </SubareaDetail>
-                <SubareaDetail>
-                  <p>Observações:</p>
-                  <span>{subarea.observations}</span>
-                </SubareaDetail>
-              </SubareaCard>
-            </Link>
+            <SubareaCard key={subarea.id}>
+              <SubareaModifies>
+                <button type="button">
+                  <FiEdit color="#00c971" size={24} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleDeleteSubarea(subarea.id)}
+                >
+                  <FiX color="#ff0000" size={32} />
+                </button>
+              </SubareaModifies>
+
+              <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
+                <SubareaInfo>
+                  <SubareaDetail>
+                    <p>Nome</p>
+                    <span>{subarea.name}</span>
+                  </SubareaDetail>
+                  <SubareaDetail>
+                    <p>Tag</p>
+                    <span>{subarea.tag}</span>
+                  </SubareaDetail>
+                  <SubareaDetail>
+                    <p>Setor</p>
+                    <span>{subarea.sector}</span>
+                  </SubareaDetail>
+                  <SubareaDetail>
+                    <p>Local</p>
+                    <span>{subarea.local}</span>
+                  </SubareaDetail>
+                  <SubareaDetail>
+                    <p>Observações</p>
+                    <span>{subarea.observations}</span>
+                  </SubareaDetail>
+                </SubareaInfo>
+              </Link>
+            </SubareaCard>
           ))
         ) : (
           <NoSubareasFoundDiv>

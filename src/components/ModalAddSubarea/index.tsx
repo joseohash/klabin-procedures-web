@@ -40,7 +40,7 @@ const ModalAddSubarea: React.FC<ModalProps> = ({
       <Form ref={formRef} onSubmit={handleSubmit}>
         <h1>Nova Subárea</h1>
 
-        <Input name="name" placeholder="Tag" isModal />
+        <Input name="name" placeholder="Nome" isModal />
         <Input name="tag" placeholder="Tag" isModal />
         <Input name="sector" placeholder="Setor" isModal />
         <Input name="local" placeholder="Local" isModal />
