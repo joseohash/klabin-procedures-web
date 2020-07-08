@@ -1,55 +1,53 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
-import { Link } from 'react-router-dom';
-import { FiX, FiEdit } from 'react-icons/fi';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import api from '../../services/api';
 
+import Subarea from '../../components/Subarea';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import ModalAddSubarea from '../../components/ModalAddSubarea';
+import ModalEditSubarea from '../../components/ModalEditSubarea';
 
-import {
-  ButtonDiv,
-  Container,
-  SubareaCard,
-  SubareaInfo,
-  SubareaDetail,
-  NoSubareasFoundDiv,
-  SubareaModifies,
-} from './styles';
+import { ButtonDiv, Container, NoSubareasFoundDiv } from './styles';
 
-interface Subarea {
-  id: string;
-  tag: string;
-  name: string;
-  sector: string;
-  local: string;
-  observations: string;
-}
-
-const Subareas: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [subareas, setSubareas] = useState<Subarea[]>([]);
+  const [editingSubarea, setEditingSubarea] = useState<Subarea>({} as Subarea);
   const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
+  const [openEditSubareaModal, setOpenEditSubareaModal] = useState(false);
 
+  const handleOpenAddSubareaModal = useCallback(() => {
+    setOpenAddSubareaModal((state) => !state);
+  }, []);
+
+  const handleOpenEditSubareaModal = useCallback(() => {
+    setOpenEditSubareaModal((state) => !state);
+  }, []);
+
+  const handleEdit = useCallback(
+    (subarea: Subarea) => {
+      setEditingSubarea(subarea);
+
+      handleOpenEditSubareaModal();
+    },
+    [handleOpenEditSubareaModal],
+  );
+
+  /**
+   * API CALLS
+   */
   useEffect(() => {
     api.get('/subareas').then((response) => {
       setSubareas(response.data);
     });
   }, []);
 
-  const handleOpenAddSubareaModal = useCallback(() => {
-    setOpenAddSubareaModal((state) => !state);
-  }, []);
-
   const handleAddSubarea = useCallback(async (subarea: Omit<Subarea, 'id'>) => {
     try {
       const response = await api.post('/subareas', subarea);
-
-      console.log(response.data);
 
       setSubareas((state) => [response.data, ...state]);
 
@@ -88,6 +86,39 @@ const Subareas: React.FC = () => {
     [subareas],
   );
 
+  const handleUpdateSubarea = useCallback(
+    async (subarea: Omit<Subarea, 'id'>): Promise<void> => {
+      try {
+        const subareasCopy = [...subareas];
+
+        const foundSubareaIndex = subareasCopy.findIndex(
+          (subareaCopy) => subareaCopy.id === editingSubarea.id,
+        );
+
+        subareasCopy[foundSubareaIndex].local = subarea.local;
+        subareasCopy[foundSubareaIndex].name = subarea.name;
+        subareasCopy[foundSubareaIndex].observations = subarea.observations;
+        subareasCopy[foundSubareaIndex].tag = subarea.tag;
+        subareasCopy[foundSubareaIndex].sector = subarea.sector;
+
+        await api.put(
+          `subareas/${editingSubarea.id}`,
+          subareasCopy[foundSubareaIndex],
+        );
+
+        setSubareas(subareasCopy);
+      } catch (error) {
+        toast(error, {
+          type: 'error',
+        });
+      }
+    },
+    [editingSubarea, subareas],
+  );
+  /**
+   * API CALLS
+   */
+
   return (
     <>
       <Header title="Subáreas" />
@@ -96,6 +127,13 @@ const Subareas: React.FC = () => {
         isOpen={openAddSubareaModal}
         setIsOpen={handleOpenAddSubareaModal}
         handleAddSubarea={handleAddSubarea}
+      />
+
+      <ModalEditSubarea
+        isOpen={openEditSubareaModal}
+        editingSubarea={editingSubarea}
+        setIsOpen={handleOpenEditSubareaModal}
+        handleEditSubarea={handleUpdateSubarea}
       />
 
       <ButtonDiv>
@@ -107,45 +145,12 @@ const Subareas: React.FC = () => {
       <Container>
         {subareas.length !== 0 ? (
           subareas.map((subarea) => (
-            <SubareaCard key={subarea.id}>
-              <SubareaModifies>
-                <button type="button">
-                  <FiEdit color="#00c971" size={24} />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleDeleteSubarea(subarea.id)}
-                >
-                  <FiX color="#ff0000" size={32} />
-                </button>
-              </SubareaModifies>
-
-              <Link key={subarea.id} to={`/procedures/${subarea.id}`}>
-                <SubareaInfo>
-                  <SubareaDetail>
-                    <p>Nome</p>
-                    <span>{subarea.name}</span>
-                  </SubareaDetail>
-                  <SubareaDetail>
-                    <p>Tag</p>
-                    <span>{subarea.tag}</span>
-                  </SubareaDetail>
-                  <SubareaDetail>
-                    <p>Setor</p>
-                    <span>{subarea.sector}</span>
-                  </SubareaDetail>
-                  <SubareaDetail>
-                    <p>Local</p>
-                    <span>{subarea.local}</span>
-                  </SubareaDetail>
-                  <SubareaDetail>
-                    <p>Observações</p>
-                    <span>{subarea.observations}</span>
-                  </SubareaDetail>
-                </SubareaInfo>
-              </Link>
-            </SubareaCard>
+            <Subarea
+              key={subarea.id}
+              subarea={subarea}
+              handleDelete={handleDeleteSubarea}
+              handleEdit={handleEdit}
+            />
           ))
         ) : (
           <NoSubareasFoundDiv>
@@ -158,4 +163,4 @@ const Subareas: React.FC = () => {
   );
 };
 
-export default Subareas;
+export default Dashboard;

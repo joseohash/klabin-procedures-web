@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import GlobalStyle from './styles/global';
 
 import SignIn from './pages/SignIn';
-import Subareas from './pages/Subareas';
+import Subareas from './pages/Dashboard';
 import Procedures from './pages/Procedures';
 
 const App: React.FC = () => {
