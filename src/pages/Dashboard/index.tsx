@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import api from '../../services/api';
+import { useAxios } from '../../hooks/UseAxios';
 
 import Subarea from '../../components/Subarea';
 import Header from '../../components/Header';
@@ -14,7 +15,6 @@ import ModalEditSubarea from '../../components/ModalEditSubarea';
 import { ButtonDiv, Container, NoSubareasFoundDiv } from './styles';
 
 const Dashboard: React.FC = () => {
-  const [subareas, setSubareas] = useState<Subarea[]>([]);
   const [editingSubarea, setEditingSubarea] = useState<Subarea>({} as Subarea);
   const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
   const [openEditSubareaModal, setOpenEditSubareaModal] = useState(false);
@@ -39,40 +39,50 @@ const Dashboard: React.FC = () => {
   /**
    * API CALLS
    */
-  useEffect(() => {
-    api.get('/subareas').then((response) => {
-      setSubareas(response.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   api.get('/subareas').then((response) => {
+  //     setSubareas(response.data);
+  //   });
+  // }, []);
 
-  const handleAddSubarea = useCallback(async (subarea: Omit<Subarea, 'id'>) => {
-    try {
-      const response = await api.post('/subareas', subarea);
+  const { data, mutate } = useAxios<Subarea[]>('subareas');
 
-      setSubareas((state) => [response.data, ...state]);
+  const handleAddSubarea = useCallback(
+    async (subarea: Omit<Subarea, 'id'>) => {
+      try {
+        const response = await api.post('/subareas', subarea);
 
-      toast('Subárea criada', {
-        type: 'success',
-      });
-    } catch (err) {
-      toast('Falha ao criar subárea', {
-        type: 'error',
-      });
-    }
-  }, []);
+        if (!data) {
+          return <h1>Carregando</h1>;
+        }
+
+        mutate([response.data, ...data], false);
+
+        // setSubareas((state) => [response.data, ...state]);
+
+        toast('Subárea criada', {
+          type: 'success',
+        });
+      } catch (err) {
+        toast('Falha ao criar subárea', {
+          type: 'error',
+        });
+      }
+    },
+    [data, mutate],
+  );
 
   const handleDeleteSubarea = useCallback(
-    async (subarea_id: string) => {
+    (subarea_id: string) => {
       try {
-        await api.delete(`subareas/${subarea_id}`);
+        api.delete(`subareas/${subarea_id}`);
 
-        const subareasCopy = [...subareas];
-
-        const subareasWithOutDeletedSubarea = subareasCopy.filter(
-          (subareaCopied) => subareaCopied.id !== subarea_id,
+        const subareasWithOutDeletedSubarea = data?.filter(
+          (subarea) => subarea.id !== subarea_id,
         );
 
-        setSubareas(subareasWithOutDeletedSubarea);
+        // setSubareas(subareasWithOutDeletedSubarea);
+        mutate(subareasWithOutDeletedSubarea, false);
 
         toast('Subárea deletada', {
           type: 'success',
@@ -83,41 +93,45 @@ const Dashboard: React.FC = () => {
         });
       }
     },
-    [subareas],
+    [data, mutate],
   );
 
   const handleUpdateSubarea = useCallback(
-    async (subarea: Omit<Subarea, 'id'>): Promise<void> => {
+    (subarea): void => {
       try {
-        const subareasCopy = [...subareas];
+        api.put(`subareas/${editingSubarea.id}`, subarea);
 
-        const foundSubareaIndex = subareasCopy.findIndex(
-          (subareaCopy) => subareaCopy.id === editingSubarea.id,
-        );
+        const updatedSubareas = data?.map((s) => {
+          if (s.id === editingSubarea.id) {
+            return {
+              ...s,
+              name: subarea.name,
+              observations: subarea.observations,
+              local: subarea.local,
+              sector: subarea.sector,
+              tag: subarea.tag,
+            };
+          }
 
-        subareasCopy[foundSubareaIndex].local = subarea.local;
-        subareasCopy[foundSubareaIndex].name = subarea.name;
-        subareasCopy[foundSubareaIndex].observations = subarea.observations;
-        subareasCopy[foundSubareaIndex].tag = subarea.tag;
-        subareasCopy[foundSubareaIndex].sector = subarea.sector;
+          return s;
+        });
 
-        await api.put(
-          `subareas/${editingSubarea.id}`,
-          subareasCopy[foundSubareaIndex],
-        );
-
-        setSubareas(subareasCopy);
+        mutate(updatedSubareas, false);
       } catch (error) {
         toast(error, {
           type: 'error',
         });
       }
     },
-    [editingSubarea, subareas],
+    [data, mutate, editingSubarea.id],
   );
   /**
    * API CALLS
    */
+
+  if (!data) {
+    return <h1>Carregando...</h1>;
+  }
 
   return (
     <>
@@ -143,8 +157,8 @@ const Dashboard: React.FC = () => {
       </ButtonDiv>
 
       <Container>
-        {subareas.length !== 0 ? (
-          subareas.map((subarea) => (
+        {data.length !== 0 ? (
+          data.map((subarea) => (
             <Subarea
               key={subarea.id}
               subarea={subarea}

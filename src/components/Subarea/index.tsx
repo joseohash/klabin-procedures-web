@@ -21,7 +21,7 @@ interface Subarea {
 
 interface Props {
   subarea: Subarea;
-  handleDelete: (subarea_id: string) => {};
+  handleDelete: (subarea_id: string) => void;
   handleEdit: (subarea: Subarea) => void;
 }
 

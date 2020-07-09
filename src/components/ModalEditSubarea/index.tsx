@@ -18,7 +18,7 @@ interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
   editingSubarea: Subarea;
-  handleEditSubarea: (subarea: Subarea) => Promise<void>;
+  handleEditSubarea: (subarea: Subarea) => void;
 }
 
 const ModalEditSubarea: React.FC<ModalProps> = ({

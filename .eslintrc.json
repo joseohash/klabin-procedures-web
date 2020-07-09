@@ -29,6 +29,7 @@
     "prettier"
   ],
   "rules": {
+    "consistent-return": "off",
     "prettier/prettier": "error",
     "react/jsx-one-expression-per-line": "off",
     "react/prop-types": "off",
