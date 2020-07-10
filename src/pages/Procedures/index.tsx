@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
-import api from '../../services/api';
 
 import Header from '../../components/Header';
 
@@ -11,6 +10,7 @@ import {
   ProcedureCard,
   ProcedureFontColor,
 } from './styles';
+import { useAxios } from '../../hooks/UseAxios';
 
 interface Params {
   subarea_id: string;
@@ -34,24 +34,20 @@ interface Procedure {
 const Procedures: React.FC = () => {
   const { params } = useRouteMatch<Params>();
 
-  const [procedures, setProcedures] = useState<Procedure[]>([]);
+  const { data } = useAxios<Procedure[]>(
+    `subareas/${params.subarea_id}/procedures`,
+  );
 
-  useEffect(() => {
-    api
-      .get<Procedure[]>(`subareas/${params.subarea_id}/procedures`)
-      .then((response) => {
-        const proceduresResponse = response.data;
-
-        setProcedures(proceduresResponse);
-      });
-  }, [params.subarea_id]);
+  if (!data) {
+    return <h1>Carregando...</h1>;
+  }
 
   return (
     <>
       <Header title="Procedimentos" />
 
       <Container>
-        {procedures.map((procedure) => (
+        {data.map((procedure) => (
           <ProcedureCard key={procedure.id}>
             <img src={procedure.procedure_image_url} alt="" />
             <ProcedureInfo>
