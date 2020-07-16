@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,12 +13,22 @@ import Button from '../../components/Button';
 import ModalAddSubarea from '../../components/ModalAddSubarea';
 import ModalEditSubarea from '../../components/ModalEditSubarea';
 
-import { ButtonDiv, Container, NoSubareasFoundDiv } from './styles';
+import {
+  ButtonDiv,
+  Container,
+  NoSubareasFoundDiv,
+  InputDiv,
+  RadioDiv,
+  RadioTextDiv,
+} from './styles';
 
 const Dashboard: React.FC = () => {
   const [editingSubarea, setEditingSubarea] = useState<Subarea>({} as Subarea);
   const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
   const [openEditSubareaModal, setOpenEditSubareaModal] = useState(false);
+  const [checked, setChecked] = useState(true);
+  const [searchFor, setSearchFor] = useState('tag');
+  const [searchValue, setSearchValue] = useState('');
 
   const handleOpenAddSubareaModal = useCallback(() => {
     setOpenAddSubareaModal((state) => !state);
@@ -125,9 +136,37 @@ const Dashboard: React.FC = () => {
     },
     [data, mutate, editingSubarea.id],
   );
+
+  useEffect(() => {
+    api
+      .get('subareas', {
+        params: {
+          searchFor,
+          searchValue,
+        },
+      })
+      .then((response) => {
+        mutate(response.data, false);
+      });
+  }, [mutate, searchFor, searchValue]);
+
   /**
    * API CALLS
    */
+
+  const handleCheckRadio = useCallback(() => {
+    setChecked((state) => !state);
+  }, []);
+
+  useEffect(() => {
+    if (!checked) {
+      setSearchValue('');
+      setSearchFor('local');
+    } else {
+      setSearchValue('');
+      setSearchFor('tag');
+    }
+  }, [checked]);
 
   if (!data) {
     return <h1>Carregando...</h1>;
@@ -151,6 +190,34 @@ const Dashboard: React.FC = () => {
       />
 
       <ButtonDiv>
+        <InputDiv>
+          <RadioDiv>
+            <RadioTextDiv>
+              Tag
+              <input
+                type="radio"
+                value="tag"
+                checked={checked}
+                onChange={handleCheckRadio}
+              />
+            </RadioTextDiv>
+            <RadioTextDiv>
+              Local
+              <input
+                type="radio"
+                value="local"
+                checked={!checked}
+                onChange={handleCheckRadio}
+              />
+            </RadioTextDiv>
+          </RadioDiv>
+          <FiSearch />
+          <input
+            placeholder="Procurar subárea"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+        </InputDiv>
         <Button type="button" onClick={handleOpenAddSubareaModal}>
           Adicionar subarea
         </Button>
