@@ -24,6 +24,10 @@ export const RadioTextDiv = styled.div`
   flex-direction: column;
   align-items: center;
   margin-right: 24px;
+
+  input {
+    color: red;
+  }
 `;
 
 export const InputDiv = styled.div`

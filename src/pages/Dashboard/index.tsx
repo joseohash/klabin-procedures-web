@@ -26,7 +26,6 @@ const Dashboard: React.FC = () => {
   const [editingSubarea, setEditingSubarea] = useState<Subarea>({} as Subarea);
   const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
   const [openEditSubareaModal, setOpenEditSubareaModal] = useState(false);
-  const [checked, setChecked] = useState(true);
   const [searchFor, setSearchFor] = useState('tag');
   const [searchValue, setSearchValue] = useState('');
 
@@ -154,19 +153,12 @@ const Dashboard: React.FC = () => {
    * API CALLS
    */
 
-  const handleCheckRadio = useCallback(() => {
-    setChecked((state) => !state);
-  }, []);
-
-  useEffect(() => {
-    if (!checked) {
-      setSearchValue('');
-      setSearchFor('local');
-    } else {
-      setSearchValue('');
-      setSearchFor('tag');
-    }
-  }, [checked]);
+  const handleRadioChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchFor(event?.target.value);
+    },
+    [],
+  );
 
   if (!data) {
     return <h1>Carregando...</h1>;
@@ -197,8 +189,8 @@ const Dashboard: React.FC = () => {
               <input
                 type="radio"
                 value="tag"
-                checked={checked}
-                onChange={handleCheckRadio}
+                checked={searchFor === 'tag'}
+                onChange={handleRadioChange}
               />
             </RadioTextDiv>
             <RadioTextDiv>
@@ -206,8 +198,8 @@ const Dashboard: React.FC = () => {
               <input
                 type="radio"
                 value="local"
-                checked={!checked}
-                onChange={handleCheckRadio}
+                checked={searchFor === 'local'}
+                onChange={handleRadioChange}
               />
             </RadioTextDiv>
           </RadioDiv>
