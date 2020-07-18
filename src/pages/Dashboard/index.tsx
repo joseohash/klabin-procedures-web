@@ -14,7 +14,7 @@ import ModalAddSubarea from '../../components/ModalAddSubarea';
 import ModalEditSubarea from '../../components/ModalEditSubarea';
 
 import {
-  ButtonDiv,
+  SearchBar,
   Container,
   NoSubareasFoundDiv,
   InputDiv,
@@ -181,7 +181,7 @@ const Dashboard: React.FC = () => {
         handleEditSubarea={handleUpdateSubarea}
       />
 
-      <ButtonDiv>
+      <SearchBar>
         <InputDiv>
           <RadioDiv>
             <RadioTextDiv>
@@ -213,7 +213,7 @@ const Dashboard: React.FC = () => {
         <Button type="button" onClick={handleOpenAddSubareaModal}>
           Adicionar subarea
         </Button>
-      </ButtonDiv>
+      </SearchBar>
 
       <Container>
         {data.length !== 0 ? (
