@@ -9,10 +9,16 @@ export const Container = styled.div`
   padding: 0 32px;
   background: #009e59;
 
-  img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
   }
 
   strong {

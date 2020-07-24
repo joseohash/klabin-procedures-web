@@ -20,10 +20,11 @@ const Header: React.FC<Props> = ({ title }) => {
 
   return (
     <Container>
-      <img src={avatar} alt="Avatar" />
+      <div>
+        <img src={avatar} alt="Avatar" />
+      </div>
 
       <strong>{title}</strong>
-
       <LogoutButtom onClick={handleLogout}>
         <FiLogOut size={32} color="#fff" />
       </LogoutButtom>
