@@ -52,6 +52,10 @@ const Procedures: React.FC = () => {
             <img src={procedure.procedure_image_url} alt="" />
             <ProcedureInfo>
               <ProcedureDetail>
+                <p>Tag</p>
+                <span>{procedure.tag}</span>
+              </ProcedureDetail>
+              <ProcedureDetail>
                 <p>Descrição</p>
                 <span>{procedure.description}</span>
               </ProcedureDetail>
@@ -66,10 +70,6 @@ const Procedures: React.FC = () => {
               <ProcedureDetail>
                 <p>Observações</p>
                 <span>{procedure.observations}</span>
-              </ProcedureDetail>
-              <ProcedureDetail>
-                <p>Tag</p>
-                <span>{procedure.tag}</span>
               </ProcedureDetail>
             </ProcedureInfo>
             <ProcedureFontColor fontColor={procedure.font} />
