@@ -54,11 +54,19 @@ export const ProcedureDetail = styled.div`
 `;
 
 export const ProcedureFontColor = styled.div<ProcedureFontColorProps>`
-  height: 32px;
-  width: 32px;
+  height: 48px;
+  width: 48px;
   margin: 16px 32px auto auto;
   padding: 16px;
   border-radius: 50%;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  strong {
+    font-size: 32px;
+  }
 
   ${(props) => {
     switch (props.fontColor) {

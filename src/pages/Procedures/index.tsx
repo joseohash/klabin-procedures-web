@@ -18,6 +18,7 @@ interface Params {
 
 interface Procedure {
   id: string;
+  index: number;
   description: string;
   font: string;
   font_hex: string;
@@ -72,7 +73,9 @@ const Procedures: React.FC = () => {
                 <span>{procedure.observations}</span>
               </ProcedureDetail>
             </ProcedureInfo>
-            <ProcedureFontColor fontColor={procedure.font} />
+            <ProcedureFontColor fontColor={procedure.font}>
+              <strong>{procedure.index}</strong>
+            </ProcedureFontColor>
           </ProcedureCard>
         ))}
       </Container>
