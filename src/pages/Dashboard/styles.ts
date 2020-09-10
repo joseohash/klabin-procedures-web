@@ -7,6 +7,7 @@ export const SearchBar = styled.div`
   align-items: center;
 
   button {
+    height: 70px;
     margin-left: 32px;
     width: 250px;
     color: #fff;

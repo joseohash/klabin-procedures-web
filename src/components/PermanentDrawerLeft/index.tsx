@@ -30,8 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#2c2932',
       color: '#fff',
     },
-
-    // necessary for content to be below app bar
   }),
 );
 
