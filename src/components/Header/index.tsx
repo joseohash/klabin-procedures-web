@@ -5,6 +5,8 @@ import { FiLogOut } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import avatar from '../../assets/avatar.jpeg';
 
+import { useAuth } from '../../hooks/auth';
+
 import { Container, LogoutButtom } from './styles';
 
 interface Props {
@@ -13,6 +15,8 @@ interface Props {
 
 const Header: React.FC<Props> = ({ title }) => {
   const history = useHistory();
+
+  const { signOut } = useAuth();
 
   const handleLogout = useCallback(() => {
     history.push('/');
@@ -26,7 +30,7 @@ const Header: React.FC<Props> = ({ title }) => {
 
       <strong>{title}</strong>
       <LogoutButtom onClick={handleLogout}>
-        <FiLogOut size={32} color="#fff" />
+        <FiLogOut size={32} color="#fff" onClick={signOut} />
       </LogoutButtom>
     </Container>
   );

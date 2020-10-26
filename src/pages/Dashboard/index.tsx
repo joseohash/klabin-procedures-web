@@ -12,6 +12,7 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import ModalAddSubarea from '../../components/ModalAddSubarea';
 import ModalEditSubarea from '../../components/ModalEditSubarea';
+import PermanentDrawerLeft from '../../components/PermanentDrawerLeft';
 
 import {
   SearchBar,
@@ -232,6 +233,7 @@ const Dashboard: React.FC = () => {
         )}
       </Container>
       <ToastContainer />
+      <PermanentDrawerLeft />
     </>
   );
 };

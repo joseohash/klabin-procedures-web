@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { FaTools } from 'react-icons/fa';
+import { FaTools, FaUser } from 'react-icons/fa';
 
 import { Link } from 'react-router-dom';
 
@@ -13,17 +13,6 @@ const drawerWidth = 260;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-    },
-    appBar: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
     drawerPaper: {
       display: 'flex',
       width: drawerWidth,
@@ -38,7 +27,6 @@ const PermanentDrawerLeft: React.FC = () => {
 
   return (
     <Drawer
-      className={classes.drawer}
       variant="permanent"
       classes={{
         paper: classes.drawerPaper,
@@ -51,6 +39,13 @@ const PermanentDrawerLeft: React.FC = () => {
             <FaTools color="#fff" />
           </ListItemIcon>
           <ListItemText primary="Subáreas" />
+        </ListItem>
+
+        <ListItem button component={Link} to="/register-operator">
+          <ListItemIcon>
+            <FaUser color="#fff" />
+          </ListItemIcon>
+          <ListItemText primary="Cadastrar operador" />
         </ListItem>
       </List>
     </Drawer>

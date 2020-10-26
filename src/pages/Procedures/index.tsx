@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
 import Header from '../../components/Header';
+import PermanentDrawerLeft from '../../components/PermanentDrawerLeft';
 
 import {
   Container,
@@ -78,6 +79,7 @@ const Procedures: React.FC = () => {
             </ProcedureFontColor>
           </ProcedureCard>
         ))}
+        <PermanentDrawerLeft />
       </Container>
     </>
   );

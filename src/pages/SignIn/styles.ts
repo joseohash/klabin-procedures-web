@@ -5,6 +5,7 @@ import signInBackground from '../../assets/signin-image.jpg';
 
 export const Container = styled.div`
   height: 100vh;
+  margin-left: -260px;
 
   display: flex;
   align-items: stretch;
