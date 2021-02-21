@@ -27,6 +27,7 @@ const Dashboard: React.FC = () => {
   const [editingSubarea, setEditingSubarea] = useState<Subarea>({} as Subarea);
   const [openAddSubareaModal, setOpenAddSubareaModal] = useState(false);
   const [openEditSubareaModal, setOpenEditSubareaModal] = useState(false);
+
   const [searchFor, setSearchFor] = useState('tag');
   const [searchValue, setSearchValue] = useState('');
 

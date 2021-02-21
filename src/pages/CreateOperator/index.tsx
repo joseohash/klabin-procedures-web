@@ -3,8 +3,6 @@ import { FiLock, FiUser, FiCreditCard } from 'react-icons/fi';
 
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
-import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
 import { useAxios } from '../../hooks/UseAxios';
 
 import PermanentDrawerLeft from '../../components/PermanentDrawerLeft';
@@ -32,9 +30,7 @@ interface Operators {
 const CreateOperator: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { data, mutate } = useAxios<Operators[]>('users/operators');
-
-  console.log(data);
+  const { data } = useAxios<Operators[]>('users/operators');
 
   const handleSubmit = useCallback(async () => {
     console.log('oi');
