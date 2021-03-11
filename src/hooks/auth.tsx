@@ -27,8 +27,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
-    const token = localStorage.getItem('@GoBarber:token');
-    const user = localStorage.getItem('@GoBarber:user');
+    const token = localStorage.getItem('@KlabinP:token');
+    const user = localStorage.getItem('@KlabinP:user');
 
     if (token && user) {
       api.defaults.headers.authorization = `Bearer ${token}`;
@@ -47,8 +47,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const { token, user } = response.data;
 
-    localStorage.setItem('@GoBarber:token', token);
-    localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+    localStorage.setItem('@KlabinP:token', token);
+    localStorage.setItem('@KlabinP:user', JSON.stringify(user));
 
     // quando ele loga ele ja vai estar com o token salvado nos headers
     api.defaults.headers.authorization = `Bearer ${token}`;
@@ -57,15 +57,15 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(() => {
-    localStorage.removeItem('@GoBarber:token');
-    localStorage.removeItem('@GoBarber:user');
+    localStorage.removeItem('@KlabinP:token');
+    localStorage.removeItem('@KlabinP:user');
 
     setData({} as AuthState);
   }, []);
 
   const updatedUser = useCallback(
     (user: User) => {
-      localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+      localStorage.setItem('@KlabinP:user', JSON.stringify(user));
 
       setData({
         token: data.token,
